@@ -172,7 +172,7 @@ contract SupplyChain {
       originFarmInformation:_originFarmInformation,
       originFarmLatitude: _originFarmLatitude,
       originFarmLongitude: _originFarmLongitude,
-      productID: 0,
+      productID: sku + _upc,
       productNotes: _productNotes,
       productPrice: 0,
       itemState: State.Harvested,
@@ -187,7 +187,7 @@ contract SupplyChain {
   }
 
   // Define a function 'processtItem' that allows a farmer to mark an item 'Processed'
-  function processItem(uint _upc) public 
+  function processItem(uint _upc) public
   // Call modifier to check if upc has passed previous supply chain stage
   harvested(_upc)
   // Call modifier to verify caller of this function
@@ -221,6 +221,7 @@ contract SupplyChain {
   {
     // Update the appropriate fields
     items[_upc].itemState = State.ForSale;
+    items[_upc].productPrice = _price;
     // Emit the appropriate event
     emit ForSale(_upc);
   }
